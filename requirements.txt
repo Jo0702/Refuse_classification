@@ -3,7 +3,12 @@ numpy
 matplotlib
 opencv_python
 tensorflow_gpu
+torch
+torchvision
 tqdm
 Pillow
 h5py
-libgl1
+streamlit
+streamlit_option_menu
+altair
+pandas
