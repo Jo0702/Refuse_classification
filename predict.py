@@ -4,7 +4,7 @@
 #-----------------------------------------------------------------------#
 import time
 
-import cv2
+# import cv2
 import io
 import numpy as np
 import tensorflow as tf
@@ -191,89 +191,89 @@ if __name__ == "__main__":
         # 根据侧边栏选择识别模式
         #-------------------------------------------------------------------------#        
         mode = "video"
-        #-------------------------------------------------------------------------#
-        # 标题文本编辑
-        #-------------------------------------------------------------------------#  
-        st.title(':camera:视频识别') #网页上的文本
-        st.info('info3') 
-        #-------------------------------------------------------------------------#
-        # 进度条
-        #-------------------------------------------------------------------------# 
-        frame_frequency = st.slider('请选择您需要的检测频度（注：多次选择将重新开始检测）：', 0, 50, 1)      
-        st.write("每 ", frame_frequency, '帧检测一次，大概需要等待', int(250/frame_frequency), '秒')
-        #-------------------------------------------------------------------------#
-        # 视频文件加载处
-        #-------------------------------------------------------------------------# 
-        video_path = st.file_uploader('视频加载处', type=['mp4']) 
-        #-------------------------------------------------------------------------#
-        # 检测结果初始化
-        #-------------------------------------------------------------------------# 
-        detection_result = ['','','','','','','']
-        #-------------------------------------------------------------------------#
-        # 视频检测及反馈
-        #-------------------------------------------------------------------------#
-        if video_path:
-            st.video(video_path)                    # 播放加载的原始视频
-            #---------------------------------------------------------#
-            # 转格式（tfile为转格式后的视频源）
-            #---------------------------------------------------------#  
-            tfile = tempfile.NamedTemporaryFile(delete=False)
-            tfile.write(video_path.read())
-            capture = cv2.VideoCapture(tfile.name)
-            if video_save_path!="":
-                fourcc  = cv2.VideoWriter_fourcc(*'avc1')
-                size    = (int(capture.get(cv2.CAP_PROP_FRAME_WIDTH)), int(capture.get(cv2.CAP_PROP_FRAME_HEIGHT)))
-                out     = cv2.VideoWriter(video_save_path, fourcc, video_fps, size)
-            fps = 0.0
-            #---------------------------------------------------------#
-            # Streamlit：Error Message
-            #---------------------------------------------------------#  
-            if (capture.isOpened() == False):
-                    st.write("Error opening video stream or file")        
-            fps = int(round(capture.get(cv2.CAP_PROP_FPS)))
-            frame_counter = 0   
-            #---------------------------------------------------------#
-            # 逐帧检测
-            #---------------------------------------------------------# 
-            while(capture.isOpened()):
-                t1 = time.time()
-                # 读取某一帧
-                ref, frame = capture.read()
-                if not ref:
-                    break
-                # 读取该帧后，帧数+1
-                frame_counter += 1
-                # 帧数为检测频度时才检测
-                if frame_counter == frame_frequency:                # 表示每 frame_frequency帧检测一次，后期可将其调整为用户可调节参数（可推拉进度条等）
-                    frame_counter = 0 
-                    # 格式转变，BGRtoRGB
-                    frame = cv2.cvtColor(frame,cv2.COLOR_BGR2RGB)
-                    # 转变成Image
-                    frame = Image.fromarray(np.uint8(frame))
-                    # 进行检测
-                    frame = np.array(yolo.detect_image(frame))
-                    # RGBtoBGR满足opencv显示格式
-                    frame = cv2.cvtColor(frame,cv2.COLOR_RGB2BGR)
+#         #-------------------------------------------------------------------------#
+#         # 标题文本编辑
+#         #-------------------------------------------------------------------------#  
+#         st.title(':camera:视频识别') #网页上的文本
+#         st.info('info3') 
+#         #-------------------------------------------------------------------------#
+#         # 进度条
+#         #-------------------------------------------------------------------------# 
+#         frame_frequency = st.slider('请选择您需要的检测频度（注：多次选择将重新开始检测）：', 0, 50, 1)      
+#         st.write("每 ", frame_frequency, '帧检测一次，大概需要等待', int(250/frame_frequency), '秒')
+#         #-------------------------------------------------------------------------#
+#         # 视频文件加载处
+#         #-------------------------------------------------------------------------# 
+#         video_path = st.file_uploader('视频加载处', type=['mp4']) 
+#         #-------------------------------------------------------------------------#
+#         # 检测结果初始化
+#         #-------------------------------------------------------------------------# 
+#         detection_result = ['','','','','','','']
+#         #-------------------------------------------------------------------------#
+#         # 视频检测及反馈
+#         #-------------------------------------------------------------------------#
+#         if video_path:
+#             st.video(video_path)                    # 播放加载的原始视频
+#             #---------------------------------------------------------#
+#             # 转格式（tfile为转格式后的视频源）
+#             #---------------------------------------------------------#  
+#             tfile = tempfile.NamedTemporaryFile(delete=False)
+#             tfile.write(video_path.read())
+#             capture = cv2.VideoCapture(tfile.name)
+#             if video_save_path!="":
+#                 fourcc  = cv2.VideoWriter_fourcc(*'avc1')
+#                 size    = (int(capture.get(cv2.CAP_PROP_FRAME_WIDTH)), int(capture.get(cv2.CAP_PROP_FRAME_HEIGHT)))
+#                 out     = cv2.VideoWriter(video_save_path, fourcc, video_fps, size)
+#             fps = 0.0
+#             #---------------------------------------------------------#
+#             # Streamlit：Error Message
+#             #---------------------------------------------------------#  
+#             if (capture.isOpened() == False):
+#                     st.write("Error opening video stream or file")        
+#             fps = int(round(capture.get(cv2.CAP_PROP_FPS)))
+#             frame_counter = 0   
+#             #---------------------------------------------------------#
+#             # 逐帧检测
+#             #---------------------------------------------------------# 
+#             while(capture.isOpened()):
+#                 t1 = time.time()
+#                 # 读取某一帧
+#                 ref, frame = capture.read()
+#                 if not ref:
+#                     break
+#                 # 读取该帧后，帧数+1
+#                 frame_counter += 1
+#                 # 帧数为检测频度时才检测
+#                 if frame_counter == frame_frequency:                # 表示每 frame_frequency帧检测一次，后期可将其调整为用户可调节参数（可推拉进度条等）
+#                     frame_counter = 0 
+#                     # 格式转变，BGRtoRGB
+#                     frame = cv2.cvtColor(frame,cv2.COLOR_BGR2RGB)
+#                     # 转变成Image
+#                     frame = Image.fromarray(np.uint8(frame))
+#                     # 进行检测
+#                     frame = np.array(yolo.detect_image(frame))
+#                     # RGBtoBGR满足opencv显示格式
+#                     frame = cv2.cvtColor(frame,cv2.COLOR_RGB2BGR)
                     
-                    fps  = ( fps + (1./(time.time()-t1)) ) / 2
-                    print("fps= %.2f"%(fps))
-                    frame = cv2.putText(frame, "fps= %.2f"%(fps), (0, 40), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
-                    # 保存视频
-                    if video_save_path!="":
-                        out.write(frame)
-                    # Streamlit转格式显示重要步骤（往内存中写入estimate数据）
-                    frame = io.BytesIO(frame)  
-            #---------------------------------------------------------#
-            # 显示检测结果
-            #---------------------------------------------------------#              
-            st.balloons()                   # 显示成功放气球提示
-            cols = st.columns(2)
-            st.info('垃圾种类')
-            st.info(yolo.Predicted_Trabbish_name)
-            print("Video Detection Done!")
-            capture.release()
-            if video_save_path!="":
-                print("Save processed video to the path :" + video_save_path)
-                out.release()
-            cv2.destroyAllWindows()
+#                     fps  = ( fps + (1./(time.time()-t1)) ) / 2
+#                     print("fps= %.2f"%(fps))
+#                     frame = cv2.putText(frame, "fps= %.2f"%(fps), (0, 40), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
+#                     # 保存视频
+#                     if video_save_path!="":
+#                         out.write(frame)
+#                     # Streamlit转格式显示重要步骤（往内存中写入estimate数据）
+#                     frame = io.BytesIO(frame)  
+#             #---------------------------------------------------------#
+#             # 显示检测结果
+#             #---------------------------------------------------------#              
+#             st.balloons()                   # 显示成功放气球提示
+#             cols = st.columns(2)
+#             st.info('垃圾种类')
+#             st.info(yolo.Predicted_Trabbish_name)
+#             print("Video Detection Done!")
+#             capture.release()
+#             if video_save_path!="":
+#                 print("Save processed video to the path :" + video_save_path)
+#                 out.release()
+#             cv2.destroyAllWindows()
         
